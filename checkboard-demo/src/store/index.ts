@@ -3,9 +3,15 @@ import { configureStore } from '@reduxjs/toolkit';
 import { boardReducer } from './slices/boardsSlice';
 import { modalReducer } from './slices/modalSlice';
 import { loggerReducer } from './slices/loggerSlice';
+import { userReducer } from './slices/userSlice';
 
 const store = configureStore({
-  reducer: { modal: modalReducer, boards: boardReducer, logger: loggerReducer },
+  reducer: {
+    modal: modalReducer,
+    boards: boardReducer,
+    logger: loggerReducer,
+    user: userReducer,
+  },
   devTools: true,
 });
 

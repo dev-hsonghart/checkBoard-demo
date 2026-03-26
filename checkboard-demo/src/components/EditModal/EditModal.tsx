@@ -125,6 +125,8 @@ const EditModal = () => {
           onChange={handleAuthorChange}
           className={input}
         />
+        <div className={title}>파일 첨부</div>
+        <input type="file" />
         <div className={buttons}>
           <button className={updateButton} onClick={handleUpdateTask}>
             일 수정하기

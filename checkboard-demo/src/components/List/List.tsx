@@ -9,6 +9,7 @@ import { addLog } from '../../store/slices/loggerSlice';
 import { v4 } from 'uuid';
 import { setModalDate } from '../../store/slices/modalSlice';
 import { deleteButton, name, header, listWrapper } from './List.css';
+import { Droppable } from 'react-beautiful-dnd';
 
 type TListProps = {
   boardId: string;
@@ -41,33 +42,42 @@ const List: FC<TListProps> = ({ boardId, list }) => {
   };
 
   return (
-    <div className={listWrapper}>
-      <div className={header}>
-        <div className={name}>{list.listName}</div>
-        <GrSubtract
-          className={deleteButton}
-          onClick={() => handleListDelete(list.listId)}
-        />
-      </div>
-      {list.tasks.map((task, index) => (
+    <Droppable droppableId={list.listId}>
+      {(provided) => (
         <div
-          key={task.taskId}
-          onClick={() =>
-            handleTaskChange(boardId, list.listId, task.taskId, task)
-          }
+          {...provided.droppableProps}
+          ref={provided.innerRef}
+          className={listWrapper}
         >
-          <Task
-            taskName={task.taskName}
-            taskDescription={task.taskDescription}
-            taskOwner={task.taskOwner}
-            boardId={boardId}
-            id={task.taskId}
-            index={index}
-          ></Task>
+          <div className={header}>
+            <div className={name}>{list.listName}</div>
+            <GrSubtract
+              className={deleteButton}
+              onClick={() => handleListDelete(list.listId)}
+            />
+          </div>
+          {list.tasks.map((task, index) => (
+            <div
+              key={task.taskId}
+              onClick={() =>
+                handleTaskChange(boardId, list.listId, task.taskId, task)
+              }
+            >
+              <Task
+                taskName={task.taskName}
+                taskDescription={task.taskDescription}
+                taskOwner={task.taskOwner}
+                boardId={boardId}
+                id={task.taskId}
+                index={index}
+              ></Task>
+            </div>
+          ))}
+          {provided.placeholder}
+          <ActionButton boardId={boardId} listId={list.listId}></ActionButton>
         </div>
-      ))}
-      <ActionButton boardId={boardId} listId={list.listId}></ActionButton>
-    </div>
+      )}
+    </Droppable>
   );
 };
 
