@@ -1,0 +1,16 @@
+{
+  "hosting": {
+    "public": "https://github.com/dev-hsonghart/checkBoard-demo",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
